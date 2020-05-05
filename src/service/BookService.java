@@ -1,24 +1,23 @@
 package service;
 
+import model.Book;
 import repository.BookRepository;
+import repository.IBookRepository;
+
+import java.util.List;
 
 public class BookService {
 
-    private BookRepository bookRepository;
-
-    private static BookService instance;
+    private IBookRepository bookRepository;
+    private List<Book> allBooks;
 
     public BookService() {
-        this.bookRepository = BookRepository.getInstance();
+        this.bookRepository = new BookRepository();
+        this.allBooks = bookRepository.loadBooks();
     }
 
 
-
-
-
-    public static BookService getInstance() {
-        if (instance == null)
-            instance = new BookService();
-        return instance;
+    public List<Book> getAllBooks() {
+        return allBooks;
     }
 }

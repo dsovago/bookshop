@@ -1,19 +1,21 @@
 package model;
 
+import java.util.List;
+
 public class User {
 
     private String name;
     private String address;
     private String username;
     private String password;
-    private Long cartId;
+    private List<Long> carts;
 
-    public User(String name, String address, String username, String password, Long cardId) {
+    public User(String name, String address, String username, String password, List<Long> carts) {
         this.name = name;
         this.address = address;
         this.username = username;
         this.password = password;
-        this.cartId = cardId;
+        this.carts = carts;
     }
 
     public String getName() {
@@ -48,17 +50,19 @@ public class User {
         this.password = password;
     }
 
-    public Long getCartId() {
-        return cartId;
+    public List<Long> getCarts() {
+        return carts;
     }
 
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
+    public void setCarts(List<Long> carts) {
+        this.carts = carts;
     }
-
 
     @Override
     public String toString() {
-        return name + ';' + address + ';' + username + ';' + password + ';' + cartId;
+        String s = "";
+        for (Long id : carts)
+            s += id + ',';
+        return name + ';' + address + ';' + username + ';' + password + ';' + s;
     }
 }

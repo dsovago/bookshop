@@ -32,7 +32,7 @@ public class Cart {
     public String toString() {
         String s = "";
         for (Long bookId : books)
-            s += bookId + ";";
+            s += bookId + ",";
         return id + ";" + s;
     }
 }

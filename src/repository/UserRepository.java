@@ -10,10 +10,7 @@ public class UserRepository implements IUserRepository{
 
     private String filename = "users.txt";
 
-    private static UserRepository instance;
-
-    public UserRepository() {
-    }
+    public UserRepository() {}
 
     @Override
     public List<User> loadUsers() {
@@ -27,7 +24,12 @@ public class UserRepository implements IUserRepository{
 
             while (line != null) {
                 String[] data = line.split(";");
-                users.add(new User(data[0], data[1], data[2], data[3], Long.parseLong(data[4])));
+                String[] cartsString = data[4].split(",");
+                List<Long> cartsList = new ArrayList<>();
+                for (String id : cartsString)
+                    cartsList.add(Long.parseLong(id));
+
+                users.add(new User(data[0], data[1], data[2], data[3], cartsList));
 
                 line = br.readLine();
             }
@@ -56,13 +58,5 @@ public class UserRepository implements IUserRepository{
             e.printStackTrace();
         }
 
-    }
-
-
-    public static UserRepository getInstance() {
-        if (instance == null)
-            instance = new UserRepository();
-
-        return instance;
     }
 }

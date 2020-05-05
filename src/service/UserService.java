@@ -1,30 +1,28 @@
 package service;
 
 import model.User;
+import repository.IUserRepository;
 import repository.UserRepository;
 
 import java.util.List;
 
-public class UserService {
+public class UserService implements IUserService {
 
-    private static UserService instance;
-
-    private UserRepository userRepository;
-    private List<User> allUser;
+    private IUserRepository userRepository;
+    private List<User> allUsers;
 
     public UserService() {
-        this.userRepository = UserRepository.getInstance();
-        this.allUser = userRepository.loadUsers();
+        this.userRepository = new UserRepository();
+        this.allUsers = userRepository.loadUsers();
     }
 
     public void registerUser(User user){
-        this.allUser.add(user);
-        userRepository.saveUsers(this.allUser);
+        this.allUsers.add(user);
+        userRepository.saveUsers(this.allUsers);
     }
 
-    public static UserService getInstance() {
-        if (instance == null)
-            instance = new UserService();
-        return instance;
+
+    public List<User> getAllUsers() {
+        return allUsers;
     }
 }

@@ -10,8 +10,6 @@ public class BookRepository implements IBookRepository {
 
     private String filename = "books.txt";
 
-    private static BookRepository instance;
-
     public BookRepository() {}
 
     @Override
@@ -53,13 +51,6 @@ public class BookRepository implements IBookRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static BookRepository getInstance() {
-        if (instance == null)
-            instance = new BookRepository();
-        return instance;
 
     }
 }

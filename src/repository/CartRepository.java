@@ -10,6 +10,9 @@ public class CartRepository implements ICartRepository {
 
     private String filename = "carts.txt";
 
+    public CartRepository() {
+    }
+
     @Override
     public List<Cart> loadCarts() {
         List<Cart> carts = new ArrayList<>();
@@ -20,12 +23,13 @@ public class CartRepository implements ICartRepository {
 
             while (line != null){
                 String[] data = line.split(";");
-                List<Long> books = new ArrayList<>();
-                for (int i = 1; i < data.length-1; i++) {
-                    books.add(Long.parseLong(data[i]));
+                String[] booksArray = data[1].split(",");
+                List<Long> booksList = new ArrayList<>();
+                for (String id : booksArray) {
+                    booksList.add(Long.parseLong(id));
                 }
 
-                carts.add(new Cart(Long.parseLong(data[0]), books));
+                carts.add(new Cart(Long.parseLong(data[0]), booksList));
                 line = br.readLine();
             }
 
