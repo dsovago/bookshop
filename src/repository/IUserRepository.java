@@ -6,7 +6,11 @@ import java.util.List;
 
 public interface IUserRepository {
 
-    List<User> loadUsers();
+    List<User> findAll();
 
-    void saveUsers(List<User> users);
+    void save(User user);
+
+    void remove(User user);
+
+    User findUserById(int id);
 }

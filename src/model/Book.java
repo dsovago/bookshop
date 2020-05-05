@@ -2,23 +2,23 @@ package model;
 
 public class Book {
 
-    private Long id;
+    private int id;
     private String title;
     private String author;
     private int price;
 
-    public Book(Long id, String title, String author, int price) {
+    public Book(int id, String title, String author, int price) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.price = price;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -48,6 +48,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return title + ";" + author + ";" + price;
+        return id + ";" + title + ";" + author + ";" + price;
     }
 }

@@ -1,13 +1,19 @@
 package service;
 
-import model.Book;
+
 import model.Cart;
 
 import java.util.List;
 
 public interface ICartService {
 
-    int getTotalPriceOfCart(Long cartId) throws Exception;
+    int getTotalPriceOfCart(int cartId);
 
-    Cart getCartById(Long cartId) throws Exception;
+    void addBookToCart(int cartId, int bookId);
+
+    void removeBookFromCart(int cartId, int bookId);
+
+    List<Cart> getAllCarts();
+
+    void addNewCart(Cart cart);
 }

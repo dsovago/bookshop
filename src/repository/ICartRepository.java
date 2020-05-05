@@ -6,7 +6,12 @@ import java.util.List;
 
 public interface ICartRepository {
 
-    List<Cart> loadCarts();
+    List<Cart> findAll();
 
-    void saveCarts(List<Cart> carts);
+    void save(Cart cart);
+
+    void remove(Cart cart);
+
+    Cart findCartById(int cartId);
+
 }

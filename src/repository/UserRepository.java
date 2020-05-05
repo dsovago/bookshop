@@ -2,61 +2,46 @@ package repository;
 
 import model.User;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements IUserRepository{
 
-    private String filename = "users.txt";
+    private List<User> allUsers;
+    private static UserRepository instance;
 
-    public UserRepository() {}
+    protected UserRepository() {
+        this.allUsers = new ArrayList<>();
+    }
+
 
     @Override
-    public List<User> loadUsers() {
-        List<User> users = new ArrayList<>();
-
-        try {
-            FileReader fr = new FileReader(filename);
-            BufferedReader br = new BufferedReader(fr);
-
-            String line = br.readLine();
-
-            while (line != null) {
-                String[] data = line.split(";");
-                String[] cartsString = data[5].split(",");
-                List<Long> cartsList = new ArrayList<>();
-                for (String id : cartsString)
-                    cartsList.add(Long.parseLong(id));
-
-                users.add(new User(Long.parseLong(data[0]), data[1], data[2], data[3], data[4], cartsList));
-
-                line = br.readLine();
-            }
-
-            br.close();
-            fr.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return users;
+    public List<User> findAll() {
+        return allUsers;
     }
 
     @Override
-    public void saveUsers(List<User> users) {
-        try {
-            FileWriter fw = new FileWriter(filename);
-            PrintWriter pw = new PrintWriter(fw);
+    public void save(User user) {
+        allUsers.add(user);
+    }
 
-            for (User user : users) {
-                pw.println(user);
-            }
+    @Override
+    public void remove(User user) {
+        allUsers.remove(user);
+    }
 
-            pw.close();
-            fw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public User findUserById(int id) {
+        for (User user : this.allUsers){
+            if (user.getId() == id)
+                return user;
         }
+        return null;
+    }
 
+    public static UserRepository getInstance() {
+        if (instance == null)
+            instance = new UserRepository();
+        return instance;
     }
 }

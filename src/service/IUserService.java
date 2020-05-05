@@ -3,11 +3,14 @@ package service;
 import model.Cart;
 import model.User;
 
+import java.util.List;
+
 public interface IUserService {
 
     void registerUser(User user);
 
-    void addNewCartToUser(Long userId, Cart cart) throws Exception;
+    void addNewCartToUser(int userId, Cart cart);
 
-    User getUserById(Long userId) throws Exception;
+    List<User> getAllUsers();
+
 }

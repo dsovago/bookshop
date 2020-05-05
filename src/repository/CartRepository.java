@@ -8,54 +8,41 @@ import java.util.List;
 
 public class CartRepository implements ICartRepository {
 
-    private String filename = "carts.txt";
+    private List<Cart> allCarts;
+    private static CartRepository instance;
 
-    public CartRepository() {
+    protected CartRepository() {
+        this.allCarts = new ArrayList<>();
+    }
+
+
+    @Override
+    public List<Cart> findAll() {
+        return allCarts;
     }
 
     @Override
-    public List<Cart> loadCarts() {
-        List<Cart> carts = new ArrayList<>();
-        try {
-            FileReader fr = new FileReader(filename);
-            BufferedReader br = new BufferedReader(fr);
-            String line = br.readLine();
-
-            while (line != null){
-                String[] data = line.split(";");
-                String[] booksArray = data[1].split(",");
-                List<Long> booksList = new ArrayList<>();
-                for (String id : booksArray) {
-                    booksList.add(Long.parseLong(id));
-                }
-
-                carts.add(new Cart(Long.parseLong(data[0]), booksList));
-                line = br.readLine();
-            }
-
-            br.close();
-            fr.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return carts;
+    public void save(Cart cart) {
+        allCarts.add(cart);
     }
 
     @Override
-    public void saveCarts(List<Cart> carts) {
-        try {
-            FileWriter fw = new FileWriter(filename);
-            PrintWriter pw = new PrintWriter(fw);
+    public void remove(Cart cart) {
+        allCarts.remove(cart);
+    }
 
-            for (Cart cart : carts) {
-                pw.println(cart);
-            }
-
-            pw.close();
-            fw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public Cart findCartById(int cartId) {
+        for (Cart cart : allCarts) {
+            if (cart.getId() == cartId)
+                return cart;
         }
+        return null;
+    }
+
+    public static CartRepository getInstance() {
+        if (instance == null)
+            instance = new CartRepository();
+        return instance;
     }
 }

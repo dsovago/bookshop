@@ -1,6 +1,7 @@
 package repository;
 
 import model.Book;
+import model.Cart;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,49 +9,51 @@ import java.util.List;
 
 public class BookRepository implements IBookRepository {
 
-    private String filename = "books.txt";
+    private List<Book> allBooks;
+    private static BookRepository instance;
 
-    public BookRepository() {}
+    protected BookRepository() {
+        allBooks = new ArrayList<>();
+    }
+
 
     @Override
-    public List<Book> loadBooks() {
+    public List<Book> findAll() {
+        return allBooks;
+    }
+
+    @Override
+    public void save(Book book) {
+        allBooks.add(book);
+    }
+
+    @Override
+    public void remove(Book book) {
+        allBooks.remove(book);
+    }
+
+    @Override
+    public Book getBookById(int id) {
+        for (Book book : allBooks) {
+            if (book.getId() == id)
+                return book;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Book> getBooksOfCart(Cart cart) {
+        List<Integer> bookIdList = cart.getBooks();
         List<Book> books = new ArrayList<>();
-        try {
-            FileReader fr = new FileReader(filename);
-            BufferedReader br = new BufferedReader(fr);
-
-            String line = br.readLine();
-
-            while (line != null) {
-                String[] data = line.split(";");
-                books.add(new Book(Long.parseLong(data[0]), data[1], data[2], Integer.parseInt(data[3])));
-
-                line = br.readLine();
-            }
-
-            br.close();
-            fr.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int bookId : bookIdList){
+            books.add(getBookById(bookId));
         }
         return books;
     }
 
-    @Override
-    public void saveBooks(List<Book> books) {
-        try {
-            FileWriter fw = new FileWriter(filename, true);
-            PrintWriter pw = new PrintWriter(fw);
-
-            for (Book book : books){
-                pw.println(book);
-            }
-
-            pw.close();
-            fw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public static BookRepository getInstance(){
+        if (instance == null)
+            instance = new BookRepository();
+        return instance;
     }
 }

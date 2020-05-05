@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface IBookService {
 
-    Book getBookById(Long bookId) throws Exception;
+    void addNewBook(Book book);
 
-    List<Book> getBooksOfCart(Cart cart) throws Exception;
+    void deleteBook(int bookId);
+
+    List<Book> getAllBooks();
 }

@@ -4,35 +4,31 @@ import java.util.List;
 
 public class Cart {
 
-    private Long id;
-    private List<Long> books;
+    private int id;
+    private List<Integer> books;
 
-    public Cart(Long id, List<Long> books) {
+    public Cart(int id, List<Integer> books) {
         this.id = id;
         this.books = books;
     }
 
-    public List<Long> getBooks() {
+    public Cart(int id) {
+        this.id = id;
+    }
+
+    public List<Integer> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Long> books) {
+    public void setBooks(List<Integer> books) {
         this.books = books;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        String s = "";
-        for (Long bookId : books)
-            s += bookId + ",";
-        return id + ";" + s;
     }
 }

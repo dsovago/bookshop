@@ -4,14 +4,22 @@ import java.util.List;
 
 public class User {
 
-    private Long id;
+    private int id;
     private String name;
     private String address;
     private String username;
     private String password;
-    private List<Long> carts;
+    private List<Integer> carts;
 
-    public User(Long id, String name, String address, String username, String password, List<Long> carts) {
+    public User(int id, String name, String address, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(int id, String name, String address, String username, String password, List<Integer> carts) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -20,11 +28,11 @@ public class User {
         this.carts = carts;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,19 +68,23 @@ public class User {
         this.password = password;
     }
 
-    public List<Long> getCarts() {
+    public List<Integer> getCarts() {
         return carts;
     }
 
-    public void setCarts(List<Long> carts) {
+    public void setCarts(List<Integer> carts) {
         this.carts = carts;
     }
 
     @Override
     public String toString() {
-        String s = "";
-        for (Long cartId : carts)
-            s += cartId + ',';
-        return id + ';' + name + ';' + address + ';' + username + ';' + password + ';' + s;
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", carts=" + carts +
+                '}';
     }
 }

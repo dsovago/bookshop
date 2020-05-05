@@ -2,46 +2,41 @@ package service;
 
 import model.Cart;
 import model.User;
+import repository.CartRepository;
+import repository.ICartRepository;
 import repository.IUserRepository;
 import repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService implements IUserService {
 
     private IUserRepository userRepository;
-    private List<User> allUsers;
+    private ICartService cartService;
 
     public UserService() {
-        this.userRepository = new UserRepository();
-        this.allUsers = userRepository.loadUsers();
-    }
-
-    public void registerUser(User user){
-        this.allUsers.add(user);
-        userRepository.saveUsers(this.allUsers);
+        this.userRepository = UserRepository.getInstance();
+        this.cartService = new CartService();
     }
 
     @Override
-    public void addNewCartToUser(Long userId, Cart cart) throws Exception {
-        User user = getUserById(userId);
-        List<Long> carts = user.getCarts();
+    public void registerUser(User user){
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addNewCartToUser(int userId, Cart cart) {
+        User user = userRepository.findUserById(userId);
+        List<Integer> carts = user.getCarts();
+        if (carts == null)
+            carts = new ArrayList<>();
         carts.add(cart.getId());
         user.setCarts(carts);
-        userRepository.saveUsers(allUsers);
+        cartService.addNewCart(cart);
     }
 
-    @Override
-    public User getUserById(Long userId) throws Exception{
-        for (User user : this.allUsers){
-            if (user.getId() == userId)
-                return user;
-        }
-        throw new Exception("User not found!");
-    }
-
-
-    public List<User> getAllUsers() {
-        return allUsers;
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }
