@@ -10,6 +10,11 @@ public class UserRepository implements IUserRepository{
 
     private String filename = "users.txt";
 
+    private static UserRepository instance;
+
+    public UserRepository() {
+    }
+
     @Override
     public List<User> loadUsers() {
         List<User> users = new ArrayList<>();
@@ -51,5 +56,13 @@ public class UserRepository implements IUserRepository{
             e.printStackTrace();
         }
 
+    }
+
+
+    public static UserRepository getInstance() {
+        if (instance == null)
+            instance = new UserRepository();
+
+        return instance;
     }
 }
