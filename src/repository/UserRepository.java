@@ -24,12 +24,12 @@ public class UserRepository implements IUserRepository{
 
             while (line != null) {
                 String[] data = line.split(";");
-                String[] cartsString = data[4].split(",");
+                String[] cartsString = data[5].split(",");
                 List<Long> cartsList = new ArrayList<>();
                 for (String id : cartsString)
                     cartsList.add(Long.parseLong(id));
 
-                users.add(new User(data[0], data[1], data[2], data[3], cartsList));
+                users.add(new User(Long.parseLong(data[0]), data[1], data[2], data[3], data[4], cartsList));
 
                 line = br.readLine();
             }

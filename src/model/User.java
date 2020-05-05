@@ -4,18 +4,28 @@ import java.util.List;
 
 public class User {
 
+    private Long id;
     private String name;
     private String address;
     private String username;
     private String password;
     private List<Long> carts;
 
-    public User(String name, String address, String username, String password, List<Long> carts) {
+    public User(Long id, String name, String address, String username, String password, List<Long> carts) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.username = username;
         this.password = password;
         this.carts = carts;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -61,8 +71,8 @@ public class User {
     @Override
     public String toString() {
         String s = "";
-        for (Long id : carts)
-            s += id + ',';
-        return name + ';' + address + ';' + username + ';' + password + ';' + s;
+        for (Long cartId : carts)
+            s += cartId + ',';
+        return id + ';' + name + ';' + address + ';' + username + ';' + password + ';' + s;
     }
 }
