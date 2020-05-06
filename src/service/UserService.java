@@ -13,11 +13,11 @@ import java.util.List;
 public class UserService implements IUserService {
 
     private IUserRepository userRepository;
-    private ICartService cartService;
+    private ICartRepository cartRepository;
 
     public UserService() {
         this.userRepository = UserRepository.getInstance();
-        this.cartService = new CartService();
+        this.cartRepository = CartRepository.getInstance();
     }
 
     @Override
@@ -26,17 +26,25 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void addNewCartToUser(int userId, Cart cart) {
+    public void addNewCartToUser(int userId) {
         User user = userRepository.findUserById(userId);
         List<Integer> carts = user.getCarts();
         if (carts == null)
             carts = new ArrayList<>();
+        Cart cart = new Cart();
+        cartRepository.save(cart);
         carts.add(cart.getId());
         user.setCarts(carts);
-        cartService.addNewCart(cart);
     }
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    @Override
+    public List<Cart> getCartsOfUser(int userId){
+        User user = userRepository.findUserById(userId);
+        return cartRepository.findCartsOfUser(user);
+    }
+
 }

@@ -2,6 +2,7 @@ package service;
 
 import model.Book;
 import model.Cart;
+import model.User;
 import repository.BookRepository;
 import repository.CartRepository;
 import repository.IBookRepository;
@@ -32,14 +33,13 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public void addBookToCart(int cartId, int bookId) {
+    public void addBookToCart(int cartId, int bookId) throws Exception{
         Cart cart = cartRepository.findCartById(cartId);
         List<Integer> booksIdList = cart.getBooks();
-        if (booksIdList == null)
-            booksIdList = new ArrayList<>();
+        if (bookRepository.getBookById(bookId).getQuantity() < 1)
+            throw new Exception("Book is not in stock!");
         booksIdList.add(bookId);
         cart.setBooks(booksIdList);
-        cartRepository.save(cart);
     }
 
     @Override
@@ -50,14 +50,23 @@ public class CartService implements ICartService {
         cart.setBooks(booksIdList);
     }
 
+    @Override
     public void addNewCart(Cart cart) {
         cartRepository.save(cart);
+    }
+
+    @Override
+    public void cartPayment(int cartId) {
+        Cart cart = cartRepository.findCartById(cartId);
+        List<Book> books = bookRepository.getBooksOfCart(cart);
+        for (Book book : books){
+            book.setQuantity(book.getQuantity()-1);
+        }
+        cartRepository.remove(cart);
     }
 
     public List<Cart> getAllCarts(){
         return cartRepository.findAll();
     }
-
-
 
 }

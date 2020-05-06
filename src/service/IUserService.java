@@ -9,7 +9,9 @@ public interface IUserService {
 
     void registerUser(User user);
 
-    void addNewCartToUser(int userId, Cart cart);
+    void addNewCartToUser(int userId);
+
+    List<Cart> getCartsOfUser(int userId);
 
     List<User> getAllUsers();
 

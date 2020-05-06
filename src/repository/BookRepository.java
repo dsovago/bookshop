@@ -24,6 +24,7 @@ public class BookRepository implements IBookRepository {
 
     @Override
     public void save(Book book) {
+        book.setId(nextBookId());
         allBooks.add(book);
     }
 
@@ -49,6 +50,13 @@ public class BookRepository implements IBookRepository {
             books.add(getBookById(bookId));
         }
         return books;
+    }
+
+    private int nextBookId(){
+        int size = findAll().size();
+        if (size == 0)
+            return 1;
+        return findAll().get(size-1).getId() + 1;
     }
 
     public static BookRepository getInstance(){

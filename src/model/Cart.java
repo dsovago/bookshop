@@ -12,8 +12,7 @@ public class Cart {
         this.books = books;
     }
 
-    public Cart(int id) {
-        this.id = id;
+    public Cart() {
     }
 
     public List<Integer> getBooks() {
@@ -30,5 +29,13 @@ public class Cart {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", books=" + books +
+                '}';
     }
 }

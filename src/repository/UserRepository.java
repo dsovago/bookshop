@@ -22,6 +22,7 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public void save(User user) {
+        user.setId(nextUserId());
         allUsers.add(user);
     }
 
@@ -37,6 +38,13 @@ public class UserRepository implements IUserRepository{
                 return user;
         }
         return null;
+    }
+
+    private int nextUserId(){
+        int size = findAll().size();
+        if (size == 0)
+            return 1;
+        return findAll().get(size-1).getId() + 1;
     }
 
     public static UserRepository getInstance() {

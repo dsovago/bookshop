@@ -11,16 +11,14 @@ public class User {
     private String password;
     private List<Integer> carts;
 
-    public User(int id, String name, String address, String username, String password) {
-        this.id = id;
+    public User(String name, String address, String username, String password) {
         this.name = name;
         this.address = address;
         this.username = username;
         this.password = password;
     }
 
-    public User(int id, String name, String address, String username, String password, List<Integer> carts) {
-        this.id = id;
+    public User(String name, String address, String username, String password, List<Integer> carts) {
         this.name = name;
         this.address = address;
         this.username = username;

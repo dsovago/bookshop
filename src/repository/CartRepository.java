@@ -1,6 +1,7 @@
 package repository;
 
 import model.Cart;
+import model.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,7 +23,18 @@ public class CartRepository implements ICartRepository {
     }
 
     @Override
+    public List<Cart> findCartsOfUser(User user) {
+        List<Cart> carts = new ArrayList<>();
+        for (int cartId : user.getCarts()){
+            carts.add(findCartById(cartId));
+        }
+        return carts;
+    }
+
+    @Override
     public void save(Cart cart) {
+        cart.setId(nextCartId());
+        cart.setBooks(new ArrayList<>());
         allCarts.add(cart);
     }
 
@@ -44,5 +56,12 @@ public class CartRepository implements ICartRepository {
         if (instance == null)
             instance = new CartRepository();
         return instance;
+    }
+
+    private int nextCartId(){
+        int size = findAll().size();
+        if (size == 0)
+            return 1;
+        return findAll().get(size-1).getId() + 1;
     }
 }
