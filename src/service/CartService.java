@@ -60,9 +60,9 @@ public class CartService implements ICartService {
         Cart cart = cartRepository.findCartById(cartId);
         List<Book> books = bookRepository.getBooksOfCart(cart);
         for (Book book : books){
-            book.setQuantity(book.getQuantity()-1);
+            book.setQuantity(book.getQuantity()-1); // a megvett könyvek raktári mennyiségéből levon egyet
         }
-        cartRepository.remove(cart);
+        cartRepository.remove(cart); //fizetés után törli a kosarat
     }
 
     public List<Cart> getAllCarts(){

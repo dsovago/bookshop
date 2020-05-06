@@ -27,8 +27,13 @@ public class BookService implements IBookService{
         bookRepository.remove(book);
     }
 
+    @Override
+    public Book getBookById(int bookId){
+        return bookRepository.getBookById(bookId);
+    }
+
+    @Override
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
-
 }

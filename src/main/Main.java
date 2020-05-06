@@ -20,40 +20,58 @@ public class Main {
 
         init();
 
-        System.out.println("Könyvek:");
+        System.out.println("Raktáron lévő könyvek:");
         for (Book book : bookService.getAllBooks()){
             System.out.println(book);
         }
 
-        System.out.println("Userek:");
+        System.out.println("\nUserek:");
         for (User user : userService.getAllUsers()){
             System.out.println(user);
         }
 
-        System.out.println("1. user kosarai:");
+        System.out.println("========");
+
+        System.out.println("\n1. user kosarai:");
         for (Cart cart : userService.getCartsOfUser(1)){
-            System.out.println(cart);
+            System.out.println(cart.getId() + ". kosár");
+            for (int id : cart.getBooks()){
+                System.out.println(bookService.getBookById(id));
+            }
         }
 
-        System.out.println("2. user kosarai:");
-        for (Cart cart : userService.getCartsOfUser(2)){
-            System.out.println(cart);
-        }
-
-        System.out.println("Fizetés:");
-
-
-        System.out.println("1. kosár összege:" + cartService.getTotalPriceOfCart(1) + " Ft");
+        System.out.println("\n1. user 1. kosár fizetése:");
+        System.out.println();
+        System.out.println("kosár összege:" + cartService.getTotalPriceOfCart(1) + " Ft");
         cartService.cartPayment(1);
         System.out.println("Sikeres fizetés!");
 
-        System.out.println("2. kosár összege:" + cartService.getTotalPriceOfCart(2) + " Ft");
+        System.out.println("========");
+
+        System.out.println("\n2. user kosarai:");
+        for (Cart cart : userService.getCartsOfUser(2)){
+            System.out.println("\n" + cart.getId() + ". kosár");
+            for (int id : cart.getBooks()){
+                System.out.println(bookService.getBookById(id));
+            }
+        }
+
+        System.out.println("\n2. user 2. kosár fizetés:");
+        System.out.println("kosár összege:" + cartService.getTotalPriceOfCart(2) + " Ft");
         cartService.cartPayment(2);
         System.out.println("Sikeres fizetés!");
 
-        System.out.println("3. kosár összege:" + cartService.getTotalPriceOfCart(3) + " Ft");
+        System.out.println("\n2. user 3. kosár fizetés:");
+        System.out.println("kosár összege:" + cartService.getTotalPriceOfCart(3) + " Ft");
         cartService.cartPayment(3);
         System.out.println("Sikeres fizetés!");
+
+        System.out.println("========");
+
+        System.out.println("\nRaktáron lévő könyvek a vásárlás után (megváltozott mennyiségek):");
+        for (Book book : bookService.getAllBooks()){
+            System.out.println(book);
+        }
 
     }
 
@@ -77,6 +95,9 @@ public class Main {
             cartService.addBookToCart(2,2);
             cartService.addBookToCart(2,3);
             cartService.addBookToCart(3,2);
+            cartService.addBookToCart(2,1);
+
+            cartService.removeBookFromCart(2,1);
         } catch (Exception e) {
             e.printStackTrace();
         }

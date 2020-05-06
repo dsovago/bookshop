@@ -12,4 +12,6 @@ public interface IBookService {
     void deleteBook(int bookId);
 
     List<Book> getAllBooks();
+
+    Book getBookById(int bookId);
 }
